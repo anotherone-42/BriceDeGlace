@@ -41,7 +41,7 @@ Le serveur sera accessible sur `http://localhost:5000` (ou le port configuré).
 ### Application Mobile (Xamarin)
 
 1. Ouvrez `mobile/BriceDeGlace.sln` dans Visual Studio ou Visual Studio for Mac
-2. Configurez l'URL de votre serveur Flask dans le code
+2. Configurez l'URL de votre serveur Flask dans le code dans mobile/BriceDeGlace/MainPage.cs
 3. Compilez et lancez sur émulateur ou appareil
 
 J'ai utilisé les nuggets suivants:
