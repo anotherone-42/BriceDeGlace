@@ -1,0 +1,10 @@
+{
+  "midi": {
+    "time": "12:00",
+    "enabled": false
+  },
+  "soir": {
+    "time": "22:11",
+    "enabled": true
+  }
+}

@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36310.24 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BriceDeGlace.Android", "BriceDeGlace.Android\BriceDeGlace.Android.csproj", "{62DF1A84-EC0C-4E2F-84FE-941E4F796FC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BriceDeGlace", "BriceDeGlace\BriceDeGlace.csproj", "{60FE4520-2E3A-48EF-8D4A-739FDC2F4551}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62DF1A84-EC0C-4E2F-84FE-941E4F796FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62DF1A84-EC0C-4E2F-84FE-941E4F796FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62DF1A84-EC0C-4E2F-84FE-941E4F796FC8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{62DF1A84-EC0C-4E2F-84FE-941E4F796FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62DF1A84-EC0C-4E2F-84FE-941E4F796FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62DF1A84-EC0C-4E2F-84FE-941E4F796FC8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{60FE4520-2E3A-48EF-8D4A-739FDC2F4551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60FE4520-2E3A-48EF-8D4A-739FDC2F4551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60FE4520-2E3A-48EF-8D4A-739FDC2F4551}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{60FE4520-2E3A-48EF-8D4A-739FDC2F4551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60FE4520-2E3A-48EF-8D4A-739FDC2F4551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60FE4520-2E3A-48EF-8D4A-739FDC2F4551}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {617A5ED4-FDBA-4F21-815F-F40F181AD14A}
+	EndGlobalSection
+EndGlobal
