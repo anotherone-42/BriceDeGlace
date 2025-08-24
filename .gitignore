@@ -1,0 +1,65 @@
+# Backend (Python/Flask)
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/.env
+backend/venv/
+backend/env/
+backend/instance/
+backend/.pytest_cache/
+backend/htmlcov/
+backend/.coverage
+backend/.vscode/settings.json
+
+# Mobile (Xamarin)
+mobile/[Dd]ebug/
+mobile/[Dd]ebugPublic/
+mobile/[Rr]elease/
+mobile/[Rr]eleases/
+mobile/x64/
+mobile/x86/
+mobile/build/
+mobile/bld/
+mobile/*/[Bb]in/
+mobile/*/[Oo]bj/
+mobile/.vs/
+mobile/*.user
+mobile/*.suo
+mobile/*.userprefs
+mobile/*.sln.docstates
+mobile/packages/
+mobile/*.nupkg
+
+# Xamarin specific
+mobile/*.apk
+mobile/*.aab
+mobile/*.ipa
+mobile/*/Resource.designer.cs
+mobile/Resource.designer.cs
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
