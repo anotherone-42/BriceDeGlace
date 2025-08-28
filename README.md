@@ -4,7 +4,7 @@ Application mobile avec backend Flask pour lancer une machine à glaçons automa
 J'utilise:  
 une Raspberry Pi 3 Model B+ [link](https://www.amazon.fr/dp/B0BNJPL4MW?ref=ppx_yo2ov_dt_b_fed_asin_title),  
 une alim 5V 3000mA [link](https://www.amazon.fr/dp/B01M58O9M9?ref=ppx_yo2ov_dt_b_fed_asin_title),   
-un cervo-moteur [link](https://www.amazon.fr/-/en/Lightweight-Digital-Airplane-Compatible-Raspberry/dp/B0DSPYZ4SH?dib=eyJ2IjoiMSJ9.ZsMzvmnSFrxXo0Q3IGJOFNhiQbcuiW6ZppOSfn85HPXE1LPD_0W0mQSuA19cSkQSdzyk7O6Vc3FWdJqFvmdLDFRq8oErJE0XmiXFPjmqxA-B_XpTi-kWZQ3y0XfPT8E8b_sW698bQR5gk1fKFLf5aSmjvlHgGC9ndkglvHwY322wEvYSeBWIJlOCtUKhQp19SUdqMCy4WuI72zeZngIns8_Ep6cZtJgeZDI-OM0jf0WzVfs6775hT5v3bkstvcptvh-ks1mTP_culljxbh1KD5MCdnEs9Ch8kHkguEuCw-c.pGdqe7OXmV_RRn7furPyuz-6bAIpyhG1IUpSw2wite4&dib_tag=se&keywords=5V%2BServo&qid=1756139796&sr=8-15&th=1)   
+un cervo-moteur [link]([https://www.amazon.fr/-/en/Lightweight-Digital-Airplane-Compatible-Raspberry/dp/B0DSPYZ4SH?dib=eyJ2IjoiMSJ9.ZsMzvmnSFrxXo0Q3IGJOFNhiQbcuiW6ZppOSfn85HPXE1LPD_0W0mQSuA19cSkQSdzyk7O6Vc3FWdJqFvmdLDFRq8oErJE0XmiXFPjmqxA-B_XpTi-kWZQ3y0XfPT8E8b_sW698bQR5gk1fKFLf5aSmjvlHgGC9ndkglvHwY322wEvYSeBWIJlOCtUKhQp19SUdqMCy4WuI72zeZngIns8_Ep6cZtJgeZDI-OM0jf0WzVfs6775hT5v3bkstvcptvh-ks1mTP_culljxbh1KD5MCdnEs9Ch8kHkguEuCw-c.pGdqe7OXmV_RRn7furPyuz-6bAIpyhG1IUpSw2wite4&dib_tag=se&keywords=5V%2BServo&qid=1756139796&sr=8-15&th=1](https://www.amazon.fr/dp/B0BZPP3R5S?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)   
 et des fichiers 3D:  
 maintien du cervo [link](https://www.thingiverse.com/thing:2806324),  
 bras 1 [link](https://www.thingiverse.com/thing:104561),  
