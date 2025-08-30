@@ -15,7 +15,7 @@ Branchements servo:
 GND servo => GND servo  
 Signal servo => GPIO 18 (pin 12)
 
-<img width="1196" height="1078" alt="image" src="https://github.com/user-attachments/assets/a3df4ffe-565e-4674-81ef-c2d6e45afcbf" />  
+<img width="598" height="539" alt="image" src="https://github.com/user-attachments/assets/a3df4ffe-565e-4674-81ef-c2d6e45afcbf" />  
 
 ## Structure du projet
 
