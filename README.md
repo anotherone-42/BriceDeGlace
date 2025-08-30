@@ -4,11 +4,18 @@ Application mobile avec backend Flask pour lancer une machine à glaçons automa
 J'utilise:  
 une Raspberry Pi 3 Model B+ [link](https://www.amazon.fr/dp/B0BNJPL4MW?ref=ppx_yo2ov_dt_b_fed_asin_title),  
 une alim 5V 3000mA [link](https://www.amazon.fr/dp/B01M58O9M9?ref=ppx_yo2ov_dt_b_fed_asin_title),   
-un cervo-moteur [link](https://www.amazon.fr/dp/B0BZPP3R5S?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)   
+un servo-moteur [link](https://www.amazon.fr/dp/B0BZPP3R5S?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)   
 et des fichiers 3D:  
-maintien du cervo [link](https://www.thingiverse.com/thing:2806324),  
+maintien du servo [link](https://www.thingiverse.com/thing:2806324),  
 bras 1 [link](https://www.thingiverse.com/thing:104561),  
 bras 2 [link](https://www.thingiverse.com/thing:421726)  
+
+Branchements servo:  
++5V servo => +5V RPI  
+GND servo => GND servo  
+Signal servo => GPIO 18 (pin 12)
+
+<img width="1196" height="1078" alt="image" src="https://github.com/user-attachments/assets/a3df4ffe-565e-4674-81ef-c2d6e45afcbf" />  
 
 ## Structure du projet
 
