@@ -62,9 +62,13 @@ Le serveur sera accessible sur `http://localhost:5000` (ou le port configuré).
 
 J'ai utilisé les nuggets suivants:
 
-| NuGet   | NETStandard.Library | Newtonsoft.Json | Xamarin.Essentials | Xamarin.FFImageLoading.Forms | Xamarin.Forms |
-|---------|---------------------|-----------------|--------------------|------------------------------|---------------|
-| Version | 2.0.3               | 13.0.3          | 1.8.1              | 2.4.11.982                   | 5.0.0.2662    |
+| NuGet                        | Version    |
+|------------------------------|------------|
+| NETStandard.Library          | 2.0.3      |
+| Newtonsoft.Json              | 13.0.3     |
+| Xamarin.Essentials           | 1.8.1      |
+| Xamarin.FFImageLoading.Forms | 2.4.11.982 |
+| Xamarin.Forms                | 5.0.0.2662 |  
 
 ## Configuration
 
