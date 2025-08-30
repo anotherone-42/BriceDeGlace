@@ -13,7 +13,7 @@ bras 2 [link](https://www.thingiverse.com/thing:421726)
 Branchements servo:  
 +5V servo => +5V RPI  
 GND servo => GND servo  
-Signal servo => GPIO 18 (pin 12)
+Signal servo => GPIO 18 (pin 12)  
 RPi3 Model B IO Pins [link](https://raspberry-projects.com/pi/pi-hardware/raspberry-pi-3-model-b/rpi3-model-b-io-pins)  
 <img width="598" height="539" alt="image" src="https://github.com/user-attachments/assets/a3df4ffe-565e-4674-81ef-c2d6e45afcbf" />  
 
