@@ -1,5 +1,6 @@
 # BriceDeGlace
 BTC adress for donations: bc1qldzadlm29m520xqfg0qwgepk3d5ltdkrknzfnk  
+
 Application mobile avec backend Flask pour lancer une machine à glaçons automatiquement en fonction de l'heure. (oui, vraiment...)  
 J'utilise:  
 une Raspberry Pi 3 Model B+ [link](https://www.amazon.fr/dp/B0BNJPL4MW?ref=ppx_yo2ov_dt_b_fed_asin_title),  
