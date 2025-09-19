@@ -9,7 +9,6 @@ un servo-moteur [link](https://www.amazon.fr/dp/B0BZPP3R5S?ref=ppx_yo2ov_dt_b_fe
 et des fichiers 3D:  
 maintien du servo [link](https://www.thingiverse.com/thing:2806324),  
 bras 1 [link](https://www.thingiverse.com/thing:104561),  
-bras 2 [link](https://www.thingiverse.com/thing:421726)  
 
 Branchements servo:  
 +5V servo => +5V RPI  
