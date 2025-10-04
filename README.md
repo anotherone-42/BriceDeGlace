@@ -74,5 +74,5 @@ J'ai utilisé les nuggets suivants:
 
 ### Configuration Mobile
 
-Modifiez l'URL du serveur dans votre code Xamarin pour pointer vers votre serveur Flask.
+Modifiez l'URL du serveur dans votre code Xamarin pour pointer vers votre serveur Flask.  
 `/mobile/BriceDeGlace/MainPage.cs`
