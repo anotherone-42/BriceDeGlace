@@ -9,7 +9,6 @@ namespace BriceDeGlace
     public class MainPage : ContentPage
     {
         private readonly string[] rpi_addresses = {
-            // IP locale WiFi
             "YOUR_RPI_ADRESS",     // IP locale Ethernet
             "YOUR_TAILSCALE_ADRESS"       // IP Tailscale
         };
