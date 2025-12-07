@@ -1,51 +1,51 @@
 #!/usr/bin/env python3
 """
-Module de contrôle du servo SG90
-Contient les fonctions pour actionner le servo moteur
+SG90 servo control module
+Contains functions to operate the servo motor
 """
 
 import RPi.GPIO as GPIO
 import time
 
 # Configuration
-SERVO_PIN = 18  # GPIO 18 (Pin 12 physique)
+SERVO_PIN = 18  # GPIO 18 (physical pin 12)
 
 def activate_servo():
     """
-    Active le servo moteur SG90 pour simuler un appui sur bouton
-    Séquence simple: 90° (repos) -> 0° (appui) -> 90° (repos)
-    
+    Activates the SG90 servo motor to simulate a button press
+    Simple sequence: 90° (rest) -> 0° (press) -> 90° (rest)
+
     Returns:
-        bool: True si succès, False sinon
+        bool: True if successful, False otherwise
     """
     try:
-        print("🔧 Activation du servo SG90...")
-        
-        # Configuration GPIO
+        print("🔧 Activating SG90 servo...")
+
+        # GPIO setup
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(SERVO_PIN, GPIO.OUT)
-        
-        # Créer un signal PWM à 50Hz
+
+        # Create a 50Hz PWM signal
         pwm = GPIO.PWM(SERVO_PIN, 50)
         pwm.start(0)
-        
-        # Position de repos -> Appui -> Retour repos
-        pwm.ChangeDutyCycle(7.5)  # 90° repos
+
+        # Rest position -> Press -> Return to rest
+        pwm.ChangeDutyCycle(7.5)  # 90° rest position
         time.sleep(0.3)
-        pwm.ChangeDutyCycle(2.5)  # 0° appui
-        time.sleep(0.5)           # Temps d'appui
-        pwm.ChangeDutyCycle(7.5)  # 90° retour repos
+        pwm.ChangeDutyCycle(2.5)  # 0° press
+        time.sleep(0.5)           # Press duration
+        pwm.ChangeDutyCycle(7.5)  # 90° return to rest
         time.sleep(0.3)
-        
-        # Arrêt et nettoyage
+
+        # Stop and cleanup
         pwm.stop()
         GPIO.cleanup()
-        
-        print("✅ Appui effectué")
+
+        print("✅ Button press completed")
         return True
-        
+
     except Exception as e:
-        print(f"❌ Erreur servo: {e}")
+        print(f"❌ Servo error: {e}")
         try:
             GPIO.cleanup()
         except:
@@ -53,5 +53,5 @@ def activate_servo():
         return False
 
 if __name__ == "__main__":
-    print("Test du servo")
+    print("Servo test")
     activate_servo()
