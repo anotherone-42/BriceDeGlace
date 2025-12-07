@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Brice Controller API Server
-Serveur Flask pour contrôler le servo et gérer les horaires
+Flask server to control the servo and manage schedules
 """
 
 from flask import Flask, request, jsonify
@@ -12,21 +12,21 @@ import logging
 import threading
 import time
 
-# Importer les fonctions du servo depuis servo.py
+# Import servo functions from servo.py
 try:
     from servo import activate_servo
 except ImportError:
-    print("❌ Erreur: Impossible d'importer servo.py")
-    print("💡 Assurez-vous que servo.py existe dans le même dossier")
-    # Fonction de fallback si servo.py n'existe pas
+    print("❌ Error: Unable to import servo.py")
+    print("💡 Make sure servo.py exists in the same directory")
+    # Fallback function if servo.py doesn't exist
     def activate_servo():
-        print("⚠️ Fonction servo simulée (servo.py non trouvé)")
+        print("⚠️ Simulated servo function (servo.py not found)")
         return True
 
-# Configuration de l'app Flask
+# Flask app configuration
 app = Flask(__name__)
 
-# Configuration des logs
+# Logging configuration
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
@@ -35,89 +35,89 @@ logging.basicConfig(
 # Configuration
 SCHEDULE_FILE = 'schedule.json'
 
-# Variables globales pour le scheduler
+# Global variables for the scheduler
 scheduler_running = False
 last_activation = {"midi": None, "soir": None}
 
 def log_request():
-    """Log les détails de la requête"""
-    print(f"🌐 {request.method} {request.url} depuis {request.remote_addr}")
+    """Log request details"""
+    print(f"🌐 {request.method} {request.url} from {request.remote_addr}")
     if request.is_json and request.get_json():
         print(f"📊 Data: {request.get_json()}")
 
 def check_and_activate_servo():
-    """Vérifie les horaires et active le servo si nécessaire"""
+    """Check schedules and activate servo if needed"""
     global last_activation
-    
+
     try:
         if not os.path.exists(SCHEDULE_FILE):
             return
-        
+
         with open(SCHEDULE_FILE, 'r') as f:
             schedule_data = json.load(f)
-        
+
         current_time = datetime.now()
         current_time_str = current_time.strftime("%H:%M")
         current_date = current_time.strftime("%Y-%m-%d")
-        
-        # Vérifier midi
+
+        # Check morning schedule
         if schedule_data.get("midi", {}).get("enabled", False):
             midi_time = schedule_data["midi"]["time"]
             if current_time_str == midi_time:
-                # Éviter les activations multiples le même jour
+                # Avoid multiple activations on the same day
                 if last_activation["midi"] != current_date:
-                    print(f"🌅 MIDI - Activation du servo à {midi_time}")
+                    print(f"🌅 MORNING - Activating servo at {midi_time}")
                     if activate_servo():
                         last_activation["midi"] = current_date
-                        print(f"✅ Servo activé automatiquement (MIDI) à {midi_time}")
-        
-        # Vérifier soir
+                        print(f"✅ Servo activated automatically (MORNING) at {midi_time}")
+
+        # Check evening schedule
         if schedule_data.get("soir", {}).get("enabled", False):
             soir_time = schedule_data["soir"]["time"]
             if current_time_str == soir_time:
-                # Éviter les activations multiples le même jour
+                # Avoid multiple activations on the same day
                 if last_activation["soir"] != current_date:
-                    print(f"🌙 SOIR - Activation du servo à {soir_time}")
+                    print(f"🌙 EVENING - Activating servo at {soir_time}")
                     if activate_servo():
                         last_activation["soir"] = current_date
-                        print(f"✅ Servo activé automatiquement (SOIR) à {soir_time}")
-                
+                        print(f"✅ Servo activated automatically (EVENING) at {soir_time}")
+
     except Exception as e:
-        print(f"❌ Erreur vérification horaires: {e}")
+        print(f"❌ Error checking schedules: {e}")
 
 def run_scheduler():
-    """Lance le scheduler en arrière-plan"""
+    """Run scheduler in background"""
     global scheduler_running
-    
+
     scheduler_running = True
-    print("📅 Scheduler démarré - vérification toutes les minutes")
-    
+    print("📅 Scheduler started - checking every minute")
+
     while scheduler_running:
         try:
             check_and_activate_servo()
         except Exception as e:
-            print(f"❌ Erreur dans le scheduler: {e}")
-        
-        # Attendre 30 secondes avant la prochaine vérification
+            print(f"❌ Error in scheduler: {e}")
+
+        # Wait 30 seconds before next check
         for _ in range(30):
             if not scheduler_running:
                 break
             time.sleep(1)
-    
-    print("📅 Scheduler arrêté")
+
+    print("📅 Scheduler stopped")
 
 def start_scheduler():
-    """Démarre le scheduler dans un thread séparé"""
+    """Start scheduler in separate thread"""
     scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
     scheduler_thread.start()
 
 # ============================================
-# ROUTES PRINCIPALES
+# MAIN ROUTES
 # ============================================
 
 @app.route('/')
 def home():
-    """Page d'accueil"""
+    """Home page"""
     return jsonify({
         "message": "Brice Controller API",
         "version": "1.0.0",
@@ -133,10 +133,10 @@ def home():
 
 @app.route('/test')
 def test():
-    """Test de connectivité"""
+    """Connectivity test"""
     log_request()
-    print("✅ Test de connectivité réussi")
-    
+    print("✅ Connectivity test successful")
+
     return jsonify({
         "status": "success", 
         "message": "Brice is ready!",
@@ -147,26 +147,26 @@ def test():
 
 @app.route('/api/servo/press', methods=['POST'])
 def servo_press():
-    """Action du servo - appui sur le bouton"""
+    """Servo action - button press"""
     log_request()
-    
+
     try:
-        # Gérer le cas où il n'y a pas de JSON (curl simple)
+        # Handle case when no JSON is provided (simple curl)
         data = {}
         if request.is_json:
             data = request.get_json() or {}
-        
+
         action = data.get('action', 'manual_press')
-        
-        print(f"🔧 Activation manuelle du servo - Action: {action}")
-        
-        # Activer le servo
+
+        print(f"🔧 Manual servo activation - Action: {action}")
+
+        # Activate servo
         servo_success = activate_servo()
-        
+
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
+
         if servo_success:
-            print(f"✅ Servo activé avec succès à {timestamp}")
+            print(f"✅ Servo activated successfully at {timestamp}")
             response = {
                 "status": "success", 
                 "message": "Briced",
@@ -175,7 +175,7 @@ def servo_press():
                 "servo_activated": True
             }
         else:
-            print(f"❌ Échec activation servo à {timestamp}")
+            print(f"❌ Servo activation failed at {timestamp}")
             response = {
                 "status": "error", 
                 "message": "Servo activation failed",
@@ -183,11 +183,11 @@ def servo_press():
                 "timestamp": timestamp,
                 "servo_activated": False
             }
-        
+
         return jsonify(response)
-        
+
     except Exception as e:
-        print(f"❌ Erreur servo: {e}")
+        print(f"❌ Servo error: {e}")
         return jsonify({
             "status": "error", 
             "message": str(e)
@@ -195,29 +195,29 @@ def servo_press():
 
 @app.route('/api/schedule', methods=['GET'])
 def get_schedule():
-    """Récupère les horaires"""
+    """Retrieve schedules"""
     log_request()
-    
+
     try:
         if os.path.exists(SCHEDULE_FILE):
             with open(SCHEDULE_FILE, 'r') as f:
                 schedule = json.load(f)
-            print(f"📅 Horaires chargés depuis {SCHEDULE_FILE}")
+            print(f"📅 Schedules loaded from {SCHEDULE_FILE}")
         else:
-            # Horaires par défaut
+            # Default schedules
             schedule = {
                 "midi": {"time": "12:00", "enabled": True},
                 "soir": {"time": "19:00", "enabled": True}
             }
-            print("📅 Horaires par défaut utilisés")
-        
+            print("📅 Using default schedules")
+
         return jsonify({
             "status": "success", 
             "schedule": schedule
         })
-        
+
     except Exception as e:
-        print(f"❌ Erreur lecture horaires: {e}")
+        print(f"❌ Error reading schedules: {e}")
         return jsonify({
             "status": "error", 
             "message": str(e)
@@ -225,38 +225,38 @@ def get_schedule():
 
 @app.route('/api/schedule', methods=['POST'])
 def save_schedule():
-    """Sauvegarde les horaires"""
+    """Save schedules"""
     log_request()
-    
+
     try:
-        # Accepter du JSON ou du form data
+        # Accept JSON or form data
         data = None
-        
+
         if request.is_json:
             data = request.get_json()
         elif request.content_type == 'application/x-www-form-urlencoded':
-            # Convertir form data en dict
+            # Convert form data to dict
             data = request.form.to_dict()
-        
+
         if not data:
             return jsonify({
                 "status": "error", 
-                "message": "Aucune donnée reçue"
+                "message": "No data received"
             }), 400
-        
-        # Sauvegarder dans le fichier JSON
+
+        # Save to JSON file
         with open(SCHEDULE_FILE, 'w') as f:
             json.dump(data, f, indent=2)
-        
-        print(f"💾 Horaires sauvegardés: {data}")
-        
+
+        print(f"💾 Schedules saved: {data}")
+
         return jsonify({
             "status": "success", 
             "message": "Schedule saved successfully"
         })
-        
+
     except Exception as e:
-        print(f"❌ Erreur sauvegarde horaires: {e}")
+        print(f"❌ Error saving schedules: {e}")
         return jsonify({
             "status": "error", 
             "message": str(e)
@@ -264,18 +264,18 @@ def save_schedule():
 
 @app.route('/api/scheduler/status')
 def scheduler_status():
-    """Statut du scheduler"""
+    """Scheduler status"""
     log_request()
-    
+
     try:
         current_time = datetime.now().strftime("%H:%M")
         current_date = datetime.now().strftime("%Y-%m-%d")
-        
+
         schedule_info = {}
         if os.path.exists(SCHEDULE_FILE):
             with open(SCHEDULE_FILE, 'r') as f:
                 schedule_info = json.load(f)
-        
+
         return jsonify({
             "status": "success",
             "scheduler_running": scheduler_running,
@@ -283,9 +283,9 @@ def scheduler_status():
             "current_date": current_date,
             "schedule": schedule_info,
             "last_activation": last_activation,
-            "message": "Scheduler actif" if scheduler_running else "Scheduler arrêté"
+            "message": "Scheduler active" if scheduler_running else "Scheduler stopped"
         })
-        
+
     except Exception as e:
         return jsonify({
             "status": "error", 
@@ -294,21 +294,21 @@ def scheduler_status():
 
 @app.route('/api/ice_maker/status')
 def ice_maker_status():
-    """Statut du générateur de glaçons (pour compatibilité avec l'app Xamarin)"""
+    """Ice maker status (for compatibility with Xamarin app)"""
     log_request()
-    
-    # Pour l'instant, retourner un statut par défaut
+
+    # For now, return default status
     return jsonify({
         "status": "success",
         "ice_maker_led": "UNKNOWN",
-        "message": "Capteur LED non configuré"
+        "message": "LED sensor not configured"
     })
 
 @app.route('/api/status')
 def api_status():
-    """Statut général de l'API"""
+    """General API status"""
     log_request()
-    
+
     return jsonify({
         "status": "success",
         "message": "Brice API is running",
@@ -328,17 +328,17 @@ def api_status():
     })
 
 # ============================================
-# ROUTES DE DEBUG
+# DEBUG ROUTES
 # ============================================
 
 @app.route('/debug/info')
 def debug_info():
-    """Informations de debug"""
+    """Debug information"""
     log_request()
-    
+
     import socket
     hostname = socket.gethostname()
-    
+
     return jsonify({
         "hostname": hostname,
         "working_directory": os.getcwd(),
@@ -353,7 +353,7 @@ def debug_info():
     })
 
 # ============================================
-# GESTION DES ERREURS
+# ERROR HANDLING
 # ============================================
 
 @app.errorhandler(404)
@@ -390,77 +390,77 @@ def internal_error(error):
     }), 500
 
 # ============================================
-# DÉMARRAGE DU SERVEUR
+# SERVER STARTUP
 # ============================================
 
 if __name__ == '__main__':
     print("=" * 60)
-    print("Démarrage de Brice")
+    print("Starting Brice")
     print("=" * 60)
-    
-    # Vérifier que servo.py est accessible
+
+    # Check if servo.py is accessible
     try:
         activate_servo
-        print("✅ Module servo.py chargé avec succès")
+        print("✅ servo.py module loaded successfully")
     except NameError:
-        print("⚠️ Attention: servo.py non trouvé, mode simulation activé")
-    
-    # Vérifier le dossier de travail
-    print(f"📁 Dossier de travail: {os.getcwd()}")
-    
-    # Vérifier les fichiers
+        print("⚠️ Warning: servo.py not found, simulation mode activated")
+
+    # Check working directory
+    print(f"📁 Working directory: {os.getcwd()}")
+
+    # Check files
     if os.path.exists('servo.py'):
-        print("✅ servo.py trouvé")
+        print("✅ servo.py found")
     else:
-        print("⚠️ servo.py non trouvé")
-    
+        print("⚠️ servo.py not found")
+
     if os.path.exists(SCHEDULE_FILE):
-        print(f"✅ {SCHEDULE_FILE} trouvé")
+        print(f"✅ {SCHEDULE_FILE} found")
         try:
             with open(SCHEDULE_FILE, 'r') as f:
                 schedule = json.load(f)
-            print(f"📅 Horaires actuels: {schedule}")
+            print(f"📅 Current schedules: {schedule}")
         except:
-            print("⚠️ Erreur lecture schedule.json")
+            print("⚠️ Error reading schedule.json")
     else:
-        print(f"⚠️ {SCHEDULE_FILE} non trouvé")
-    
-    # Démarrer le scheduler
-    print("📅 Démarrage du scheduler automatique...")
+        print(f"⚠️ {SCHEDULE_FILE} not found")
+
+    # Start scheduler
+    print("📅 Starting automatic scheduler...")
     start_scheduler()
-    
-    print("🌐 Serveur accessible sur:")
+
+    print("🌐 Server accessible at:")
     print("   - Local: http://localhost:5000")
-    print("   - Réseau: http://0.0.0.0:5000")
-    print("   - IP LAN: http://YOUR_RPI_IP:5000")
+    print("   - Network: http://0.0.0.0:5000")
+    print("   - LAN IP: http://YOUR_RPI_IP:5000")
     print("   - Tailscale: http://YOUR_RPI_TAILSCALE_IP:5000")
     print()
-    print("📋 Endpoints disponibles:")
-    print("   - GET  /                        (accueil)")
-    print("   - GET  /test                    (test de connectivité)")
-    print("   - POST /api/servo/press         (actionner le servo)")
-    print("   - GET  /api/schedule            (récupérer horaires)")
-    print("   - POST /api/schedule            (sauvegarder horaires)")
-    print("   - GET  /api/scheduler/status    (statut scheduler)")
-    print("   - GET  /api/ice_maker/status    (statut générateur)")
-    print("   - GET  /api/status              (statut de l'API)")
-    print("   - GET  /debug/info              (informations debug)")
+    print("📋 Available endpoints:")
+    print("   - GET  /                        (home)")
+    print("   - GET  /test                    (connectivity test)")
+    print("   - POST /api/servo/press         (activate servo)")
+    print("   - GET  /api/schedule            (retrieve schedules)")
+    print("   - POST /api/schedule            (save schedules)")
+    print("   - GET  /api/scheduler/status    (scheduler status)")
+    print("   - GET  /api/ice_maker/status    (ice maker status)")
+    print("   - GET  /api/status              (API status)")
+    print("   - GET  /debug/info              (debug information)")
     print()
-    print("🔧 Pour arrêter: Ctrl+C")
-    print("📊 Pour voir les logs: sudo journalctl -u brice-de-glace -f")
-    print("📅 Scheduler automatique: ACTIF")
+    print("🔧 To stop: Ctrl+C")
+    print("📊 To view logs: sudo journalctl -u brice-de-glace -f")
+    print("📅 Automatic scheduler: ACTIVE")
     print("=" * 60)
-    
-    # Lancer le serveur Flask
+
+    # Start Flask server
     try:
         app.run(
-            host='0.0.0.0',  # Écouter sur toutes les interfaces
+            host='0.0.0.0',  # Listen on all interfaces
             port=5000, 
-            debug=False,     # Mettre True pour plus de logs en développement
+            debug=False,     # Set True for more logs in development
             threaded=True
         )
     except Exception as e:
-        print(f"❌ Impossible de démarrer le serveur: {e}")
-        print("💡 Vérifiez que le port 5000 n'est pas déjà utilisé")
+        print(f"❌ Unable to start server: {e}")
+        print("💡 Check if port 5000 is already in use")
     finally:
         scheduler_running = False
