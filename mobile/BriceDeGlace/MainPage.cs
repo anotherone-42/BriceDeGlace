@@ -9,8 +9,8 @@ namespace BriceDeGlace
     public class MainPage : ContentPage
     {
         private readonly string[] rpi_addresses = {
-            "YOUR_RPI_ADRESS",     // IP locale Ethernet
-            "YOUR_TAILSCALE_ADRESS"       // IP Tailscale
+            "YOUR_RPI_ADRESS",     // Local Ethernet IP
+            "YOUR_TAILSCALE_ADRESS"       // Tailscale IP
         };
         private string active_rpi_address;
 
@@ -37,21 +37,21 @@ namespace BriceDeGlace
             var isConnected = await CheckConnection();
             if (isConnected)
             {
-                _connectionLabel.Text = $"🟢 Connecté à la rpi ({active_rpi_address})";
+                _connectionLabel.Text = $"🟢 Connected to RPi ({active_rpi_address})";
                 _connectionLabel.TextColor = Color.FromHex("#4CAF50");
                 await LoadCurrentSchedule();
                 await CheckIceMakerStatus();
             }
             else
             {
-                _connectionLabel.Text = "🔴 Hors ligne";
+                _connectionLabel.Text = "🔴 Offline";
                 _connectionLabel.TextColor = Color.FromHex("#F44336");
             }
         }
 
         private void CreateInterface()
         {
-            Title = "Brice de glace";
+            Title = "Brice de Glace";
             BackgroundColor = Color.White;
 
             var mainGrid = new Grid();
@@ -79,7 +79,7 @@ namespace BriceDeGlace
                 Spacing = 15
             };
 
-            // Titre
+            // Title
             var titleLabel = new Label
             {
                 Text = "🧊T'es glacé🧊",
@@ -91,20 +91,20 @@ namespace BriceDeGlace
             };
             mainStack.Children.Add(titleLabel);
 
-            // Indicateur de connexion
+            // Connection indicator
             _connectionLabel = new Label
             {
-                Text = "⚪ Vérification connexion...",
+                Text = "⚪ Checking connection...",
                 FontSize = 14,
                 HorizontalOptions = LayoutOptions.Center,
                 Margin = new Thickness(0, -20, 0, 10)
             };
             mainStack.Children.Add(_connectionLabel);
 
-            // Statut générateur de glaçons
+            // Ice maker status
             _iceMakerStatusLabel = new Label
             {
-                Text = "🧊 Générateur: En attente du capteur...",
+                Text = "🧊 Ice maker: Waiting for sensor...",
                 FontSize = 12,
                 HorizontalOptions = LayoutOptions.Center,
                 TextColor = Color.FromHex("#FF9800"),
@@ -112,7 +112,7 @@ namespace BriceDeGlace
             };
             mainStack.Children.Add(_iceMakerStatusLabel);
 
-            // Frame Midi
+            // Morning frame
             var midiFrame = new Frame
             {
                 BackgroundColor = Color.White,
@@ -126,7 +126,7 @@ namespace BriceDeGlace
 
             midiStack.Children.Add(new Label
             {
-                Text = "🌅 MIDI",
+                Text = "🌅 MORNING",
                 FontSize = 20,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromHex("#1565C0"),
@@ -151,7 +151,7 @@ namespace BriceDeGlace
 
             _midiStatusLabel = new Label
             {
-                Text = "Activé",
+                Text = "Enabled",
                 FontSize = 14,
                 TextColor = Color.FromHex("#4CAF50"),
                 HorizontalOptions = LayoutOptions.Center
@@ -160,14 +160,14 @@ namespace BriceDeGlace
 
             _midiSwitch.Toggled += (sender, e) =>
             {
-                _midiStatusLabel.Text = e.Value ? "Activé" : "Désactivé";
+                _midiStatusLabel.Text = e.Value ? "Enabled" : "Disabled";
                 _midiStatusLabel.TextColor = e.Value ? Color.FromHex("#4CAF50") : Color.FromHex("#F44336");
             };
 
             midiFrame.Content = midiStack;
             mainStack.Children.Add(midiFrame);
 
-            // Frame Soir
+            // Evening frame
             var soirFrame = new Frame
             {
                 BackgroundColor = Color.White,
@@ -180,7 +180,7 @@ namespace BriceDeGlace
 
             soirStack.Children.Add(new Label
             {
-                Text = "🌙 SOIR",
+                Text = "🌙 EVENING",
                 FontSize = 20,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.FromHex("#1565C0"),
@@ -205,7 +205,7 @@ namespace BriceDeGlace
 
             _soirStatusLabel = new Label
             {
-                Text = "Activé",
+                Text = "Enabled",
                 FontSize = 14,
                 TextColor = Color.FromHex("#4CAF50"),
                 HorizontalOptions = LayoutOptions.Center
@@ -214,21 +214,21 @@ namespace BriceDeGlace
 
             _soirSwitch.Toggled += (sender, e) =>
             {
-                _soirStatusLabel.Text = e.Value ? "Activé" : "Désactivé";
+                _soirStatusLabel.Text = e.Value ? "Enabled" : "Disabled";
                 _soirStatusLabel.TextColor = e.Value ? Color.FromHex("#4CAF50") : Color.FromHex("#F44336");
             };
 
             soirFrame.Content = soirStack;
             mainStack.Children.Add(soirFrame);
 
-            // Boutons principaux
+            // Main buttons
             var buttonStack = new StackLayout
             {
                 Spacing = 15,
                 Margin = new Thickness(0, 20, 0, 0)
             };
 
-            // Ligne unique avec deux boutons
+            // Single row with two buttons
             var mainButtonStack = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
@@ -238,7 +238,7 @@ namespace BriceDeGlace
 
             var saveButton = new Button
             {
-                Text = "💾 Sauvegarder",
+                Text = "💾 Save",
                 BackgroundColor = Color.FromHex("#4CAF50"),
                 TextColor = Color.White,
                 FontSize = 16,
@@ -257,7 +257,7 @@ namespace BriceDeGlace
 
             var testButton = new Button
             {
-                Text = "test moteur",
+                Text = "Test motor",
                 BackgroundColor = Color.FromHex("#FF5722"),
                 TextColor = Color.White,
                 FontSize = 16,
@@ -280,7 +280,7 @@ namespace BriceDeGlace
             // Status
             _statusLabel = new Label
             {
-                Text = "Prêt",
+                Text = "Ready",
                 FontSize = 16,
                 TextColor = Color.FromHex("#1565C0"),
                 HorizontalOptions = LayoutOptions.Center,
@@ -292,7 +292,7 @@ namespace BriceDeGlace
             _refreshView.Content = scrollView;
             mainGrid.Children.Add(_refreshView);
 
-            // GIF de Brice
+            // Brice GIF
             var frontBriceGif = new CachedImage
             {
                 Source = "brice_de_nice.gif",
@@ -318,7 +318,7 @@ namespace BriceDeGlace
             {
                 try
                 {
-                    System.Diagnostics.Debug.WriteLine($"Tentative de connexion à {address}...");
+                    System.Diagnostics.Debug.WriteLine($"Attempting connection to {address}...");
                     using (var client = new System.Net.Http.HttpClient())
                     {
                         client.Timeout = TimeSpan.FromSeconds(3);
@@ -326,15 +326,15 @@ namespace BriceDeGlace
                         if (response.IsSuccessStatusCode)
                         {
                             active_rpi_address = address;
-                            System.Diagnostics.Debug.WriteLine($"Connexion réussie avec {address}");
+                            System.Diagnostics.Debug.WriteLine($"Connection successful with {address}");
                             return true;
                         }
-                        System.Diagnostics.Debug.WriteLine($"Échec connexion {address}: {response.StatusCode}");
+                        System.Diagnostics.Debug.WriteLine($"Connection failed {address}: {response.StatusCode}");
                     }
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Erreur connexion {address}: {ex.Message}");
+                    System.Diagnostics.Debug.WriteLine($"Connection error {address}: {ex.Message}");
                     continue;
                 }
             }
@@ -345,7 +345,7 @@ namespace BriceDeGlace
         {
             try
             {
-                _statusLabel.Text = "Chargement des horaires...";
+                _statusLabel.Text = "Loading schedule...";
                 _statusLabel.TextColor = Color.FromHex("#FF9800");
 
                 using (var client = new System.Net.Http.HttpClient())
@@ -362,19 +362,19 @@ namespace BriceDeGlace
                         {
                             var schedule = scheduleData["schedule"];
 
-                            // Midi
+                            // Morning
                             var midiTime = schedule["midi"]["time"].ToString();
                             var midiEnabled = (bool)schedule["midi"]["enabled"];
                             _midiTimePicker.Time = TimeSpan.Parse(midiTime);
                             _midiSwitch.IsToggled = midiEnabled;
 
-                            // Soir
+                            // Evening
                             var soirTime = schedule["soir"]["time"].ToString();
                             var soirEnabled = (bool)schedule["soir"]["enabled"];
                             _soirTimePicker.Time = TimeSpan.Parse(soirTime);
                             _soirSwitch.IsToggled = soirEnabled;
 
-                            _statusLabel.Text = "Horaires chargés ✅";
+                            _statusLabel.Text = "Schedule loaded ✅";
                             _statusLabel.TextColor = Color.FromHex("#4CAF50");
                         }
                     }
@@ -382,9 +382,9 @@ namespace BriceDeGlace
             }
             catch (Exception ex)
             {
-                _statusLabel.Text = "Impossible de charger les horaires";
+                _statusLabel.Text = "Unable to load schedule";
                 _statusLabel.TextColor = Color.FromHex("#F44336");
-                System.Diagnostics.Debug.WriteLine($"Erreur chargement: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Loading error: {ex.Message}");
             }
         }
 
@@ -399,16 +399,16 @@ namespace BriceDeGlace
 
                 await SendScheduleToRaspberryPi(midiTime, soirTime, midiEnabled, soirEnabled);
 
-                _statusLabel.Text = "Horaires sauvegardés !";
+                _statusLabel.Text = "Schedule saved!";
                 _statusLabel.TextColor = Color.FromHex("#4CAF50");
 
-                await DisplayAlert("Succès", "Horaires sauvegardés !", "OK");
+                await DisplayAlert("Success", "Schedule saved!", "OK");
             }
             catch (Exception ex)
             {
-                _statusLabel.Text = $"Erreur: {ex.Message}";
+                _statusLabel.Text = $"Error: {ex.Message}";
                 _statusLabel.TextColor = Color.FromHex("#F44336");
-                await DisplayAlert("Erreur", ex.Message, "OK");
+                await DisplayAlert("Error", ex.Message, "OK");
             }
         }
 
@@ -416,21 +416,21 @@ namespace BriceDeGlace
         {
             try
             {
-                _statusLabel.Text = "test servo";
+                _statusLabel.Text = "Testing servo";
                 _statusLabel.TextColor = Color.FromHex("#FF9800");
 
                 await CallRaspberryPiAPI("test");
 
-                _statusLabel.Text = "Ca marche mdr";
+                _statusLabel.Text = "It works lol";
                 _statusLabel.TextColor = Color.FromHex("#4CAF50");
 
-                await DisplayAlert("Test", "Servo actionné avec succès !", "OK");
+                await DisplayAlert("Test", "Servo activated successfully!", "OK");
             }
             catch (Exception ex)
             {
-                _statusLabel.Text = $"Erreur: {ex.GetType().Name}";
+                _statusLabel.Text = $"Error: {ex.GetType().Name}";
                 _statusLabel.TextColor = Color.FromHex("#F44336");
-                await DisplayAlert("Erreur", $"Problème de connexion:\n{ex.Message}", "OK");
+                await DisplayAlert("Error", $"Connection problem:\n{ex.Message}", "OK");
             }
         }
 
@@ -454,15 +454,15 @@ namespace BriceDeGlace
                         switch (ledState)
                         {
                             case "ON":
-                                _iceMakerStatusLabel.Text = "🧊 Générateur: ✅ EN MARCHE";
+                                _iceMakerStatusLabel.Text = "🧊 Ice maker: ✅ ON";
                                 _iceMakerStatusLabel.TextColor = Color.FromHex("#4CAF50");
                                 break;
                             case "OFF":
-                                _iceMakerStatusLabel.Text = "🧊 Générateur: ❌ ARRÊTÉ";
+                                _iceMakerStatusLabel.Text = "🧊 Ice maker: ❌ OFF";
                                 _iceMakerStatusLabel.TextColor = Color.FromHex("#F44336");
                                 break;
                             default:
-                                _iceMakerStatusLabel.Text = $"🧊 {message ?? "Statut inconnu"}";
+                                _iceMakerStatusLabel.Text = $"🧊 {message ?? "Unknown status"}";
                                 _iceMakerStatusLabel.TextColor = Color.FromHex("#FF9800");
                                 break;
                         }
@@ -471,7 +471,7 @@ namespace BriceDeGlace
             }
             catch
             {
-                _iceMakerStatusLabel.Text = "🧊 Générateur: Erreur de connexion";
+                _iceMakerStatusLabel.Text = "🧊 Ice maker: Connection error";
                 _iceMakerStatusLabel.TextColor = Color.FromHex("#F44336");
             }
         }
@@ -504,13 +504,13 @@ namespace BriceDeGlace
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception($"Erreur serveur: {response.StatusCode}");
+                    throw new Exception($"Server error: {response.StatusCode}");
                 }
 
                 var result = JObject.Parse(responseContent);
                 if (result["status"]?.ToString() != "success")
                 {
-                    throw new Exception($"Erreur: {result["message"]}");
+                    throw new Exception($"Error: {result["message"]}");
                 }
             }
         }
@@ -530,7 +530,7 @@ namespace BriceDeGlace
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception($"Erreur {response.StatusCode}: {responseContent}");
+                    throw new Exception($"Error {response.StatusCode}: {responseContent}");
                 }
             }
         }
