@@ -46,7 +46,7 @@ python -m venv venv
 source venv/bin/activate # Linux/Mac
 # or venv\Scripts\activate # Windows
 
-pip install flask
+pip install flask schedule RPi.GPIO
 
 # Launch the server
 python servo_api.py
